@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
+// import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -12,23 +11,17 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Project Management App",
-  description: "Website for Project Management App by Ruri Pelinandang",
-  icons: {
-    icon: "/favicon.svg",
-  },
+  description: "Dashboard for Project Management App by Ruri Pelinandang",
 };
 
-export default function RootLayout({
+export default function layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} antialiased`}>
-        <Navbar />
-        {children}
-      </body>
+      <body className={`${poppins.className} antialiased`}>{children}</body>
     </html>
   );
 }
