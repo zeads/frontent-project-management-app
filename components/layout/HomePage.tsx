@@ -1,12 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
 
 export default function HomePage() {
   return (
-    <section className="h-screen bg-[url('/purple_sky.jpg')] bg-cover bg-center">
-      <Navbar />
-      <div className="flex flex-col items-center justify-center my-10 lg:pt-20">
+    <section className="h-screen bg-[url('/purple_sky.jpg')] bg-cover bg-center -mt-15">
+      {/* <Navbar /> */}
+      <div className="flex flex-col items-center justify-center pt-40 lg:pt-50">
         <h1 className="text-7xl text-purple-950 max-w-6xl text-center mb-8 leading-tight">
           Manage Projects as Easily as Making a Shopping List.
         </h1>
