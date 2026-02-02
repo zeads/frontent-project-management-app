@@ -17,8 +17,8 @@ export default function Navbar() {
   ];
 
   return (
-    <>
-      <nav className="bg-white border-b border-gray-200 fixed w-full z-50 ">
+    <div className="sticky top-0 z-50 flex items-center">
+      <nav className="bg-white border-2 rounded-3xl m-5 border-gray-200 w-full z-50 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 shadow-[0px_11px_66px_-26px_rgba(59,130,246,0.5)]">
           <div className="flex justify-between h-18 items-center">
             {/* Logo */}
@@ -34,7 +34,7 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-gray-600 hover:text-blue-600 transition-colors font-medium"
+                  className="text-purple-950 hover:text-purple-600 transition-colors font-medium"
                 >
                   {link.name}
                 </Link>
@@ -45,7 +45,7 @@ export default function Navbar() {
             <div className="lg:hidden flex items-center">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-600 hover:text-blue-600 focus:outline-none"
+                className="text-purple-950 hover:text-white focus:outline-none"
                 aria-label="Toogle Menu"
               >
                 {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -60,7 +60,7 @@ export default function Navbar() {
                       key={link.name}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-purple-950 hover:text-purple-600 hover:bg-gray-50"
                     >
                       {link.name}
                     </Link>
@@ -71,7 +71,7 @@ export default function Navbar() {
                     key="portfolio"
                     href="/portfolio"
                     onClick={() => setIsOpen(false)}
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-purple-950 hover:text-purple-600 hover:bg-gray-50"
                   >
                     Get Started
                   </Link>
@@ -85,7 +85,7 @@ export default function Navbar() {
                 href="/portfolio"
                 className=" flex gap-2 items-center"
               >
-                <Button className="bg-white border text-gray-600 border-blue-500 hover:text-white hover:bg-blue-500 transition-colors font-medium">
+                <Button className="bg-white border text-purple-950 border-purple-950 hover:text-white hover:bg-purple-950 transition-colors font-medium">
                   Get Started
                 </Button>
               </Link>
@@ -93,6 +93,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 }
