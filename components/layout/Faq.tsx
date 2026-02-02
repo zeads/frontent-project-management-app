@@ -1,3 +1,7 @@
 export default function Faq() {
-  return <div className="h-screen">Faq</div>;
+  return (
+    <div id="faq" className="h-screen">
+      Faq
+    </div>
+  );
 }

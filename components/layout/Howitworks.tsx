@@ -1,3 +1,7 @@
 export default function Howitworks() {
-  return <div className="h-screen">Howitworks</div>;
+  return (
+    <div id="howitworks" className="h-screen">
+      Howitworks
+    </div>
+  );
 }

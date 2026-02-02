@@ -1,3 +1,7 @@
 export default function Pricing() {
-  return <div className="h-screen">Pricing</div>;
+  return (
+    <div id="pricing" className="h-screen">
+      Pricing
+    </div>
+  );
 }

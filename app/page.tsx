@@ -2,7 +2,6 @@
 
 import Faq from "@/components/layout/Faq";
 import Features from "@/components/layout/Features";
-import Footer from "@/components/layout/Footer";
 import HomePage from "@/components/layout/HomePage";
 import Howitworks from "@/components/layout/Howitworks";
 import Pricing from "@/components/layout/Pricing";
@@ -14,8 +13,8 @@ export default function Home() {
       <HomePage />
       <Features />
       <Howitworks />
-      <Pricing />
       <Testimonials />
+      <Pricing />
       <Faq />
     </div>
   );
