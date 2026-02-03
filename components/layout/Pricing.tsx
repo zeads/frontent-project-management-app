@@ -1,7 +1,9 @@
+import Underconstruction from "../ui/Underconstruction";
+
 export default function Pricing() {
   return (
     <div id="pricing" className="h-screen">
-      Pricing
+      P<Underconstruction />
     </div>
   );
 }
