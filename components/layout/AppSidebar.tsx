@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -36,6 +37,13 @@ export function AppSidebar() {
 
   return (
     <Sidebar variant="sidebar" collapsible="icon">
+      <Image
+        src="/logo.png"
+        width={200}
+        height={50}
+        alt="logo"
+        className="p-2"
+      />
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-bold uppercase tracking-wider text-slate-500">
