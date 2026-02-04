@@ -68,8 +68,8 @@ export default function Navbar() {
                 </div>
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                   <Link
-                    key="dashboard"
-                    href="/dashboard"
+                    key="signin"
+                    href="/signin"
                     onClick={() => setIsOpen(false)}
                     className="block px-3 py-2 rounded-md text-base font-medium text-purple-950 hover:text-purple-600 hover:bg-gray-50"
                   >
@@ -81,8 +81,8 @@ export default function Navbar() {
 
             <div className="hidden lg:flex space-x-8">
               <Link
-                key="dashboard"
-                href="/dashboard"
+                key="signin"
+                href="/signin"
                 className=" flex gap-2 items-center"
               >
                 <Button className="bg-white border text-purple-950 border-purple-950 hover:text-white hover:bg-purple-950 transition-colors font-medium">
