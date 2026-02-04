@@ -37,13 +37,15 @@ export function AppSidebar() {
 
   return (
     <Sidebar variant="sidebar" collapsible="icon">
-      <Image
-        src="/logo.png"
-        width={200}
-        height={50}
-        alt="logo"
-        className="p-2"
-      />
+      <Link href="/" className="flex items-center">
+        <Image
+          src="/logo.png"
+          width={200}
+          height={50}
+          alt="logo"
+          className="p-2"
+        />
+      </Link>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-bold uppercase tracking-wider text-slate-500">

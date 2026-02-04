@@ -21,12 +21,12 @@ export default function DashboardLayout({
               <h1 className="text-sm font-medium text-slate-500">Overview</h1>
             </div>
             <div className="flex items-center gap-3">
-              <Bell className="mr-10" />
+              <Bell className="mr-5 lg:mr-10" />
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <p>Ruri Pelinandang</p>
+              <p className="hidden lg:block">Ruri Pelinandang</p>
             </div>
           </header>
 
