@@ -2,6 +2,7 @@
 
 import { LoginInput, loginSchema } from "@/lib/auth-schema";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function loginAction(data: LoginInput) {
   const validatedFields = loginSchema.safeParse(data);
@@ -19,21 +20,28 @@ export async function loginAction(data: LoginInput) {
 
     const result = await response.json();
 
-    console.log(result);
+    // console.log(result);
 
     if (!response.ok) {
       return { error: result.message || "Login failed" };
     }
 
     const cookieStore = await cookies();
-    cookieStore.set("token", result.token, {
+    cookieStore.set("session_token", result.data, {
       httpOnly: true,
       secure: true, //beda
       sameSite: "strict", //beda
       maxAge: 60 * 60 * 24, // 1 day
     });
+
     return { success: true };
   } catch (error) {
     return { error: "Connection error " + error };
   }
+}
+
+export async function logoutAction() {
+  const cookieStore = await cookies();
+  cookieStore.delete("session_token");
+  redirect("/login");
 }
