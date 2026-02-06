@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 // 1. Tentukan rute mana saja yang publik (bisa diakses tanpa login)
 const publicRoutes = ["/login", "/register", "/"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 2. Ambil token dari cookie
@@ -41,5 +41,8 @@ export const config = {
    * - favicon.ico (favicon file)
    * - public folder (public assets)
    */
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|public).*)"],
+  // matcher: ["/((?!api|_next/static|_next/image|favicon.ico|public).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|.*\\.(?:jpg|jpeg|gif|png|svg|ico)).*)",
+  ],
 };
