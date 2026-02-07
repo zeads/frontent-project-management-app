@@ -5,40 +5,43 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Project } from "@/types/project";
+import { getProjects } from "@/src/services/project-service";
 
 // Mock Data (Nantinya diganti dengan fetch dari API/DB)
-const projects: Project[] = [
-  {
-    id: "1",
-    title: "E-Commerce Re-design",
-    description: "Modernisasi tampilan UI/UX untuk platform toko online.",
-    status: "Active",
-    progress: 75,
-    dueDate: "24 Des 2025",
-    team: ["JS", "AS", "RK"],
-  },
-  {
-    id: "2",
-    title: "Mobile App Integration",
-    description: "Integrasi API sistem inventaris ke aplikasi Android & iOS.",
-    status: "On Hold",
-    progress: 30,
-    dueDate: "15 Jan 2026",
-    team: ["MD", "LM"],
-  },
-  {
-    id: "3",
-    title: "SEO Optimization",
-    description:
-      "Audit dan optimasi konten untuk meningkatkan traffic organik.",
-    status: "Completed",
-    progress: 100,
-    dueDate: "01 Feb 2026",
-    team: ["BK"],
-  },
-];
+// const projects: Project[] = [
+//   {
+//     id: "1",
+//     title: "E-Commerce Re-design",
+//     description: "Modernisasi tampilan UI/UX untuk platform toko online.",
+//     status: "Active",
+//     progress: 75,
+//     dueDate: "24 Des 2025",
+//     team: ["JS", "AS", "RK"],
+//   },
+//   {
+//     id: "2",
+//     title: "Mobile App Integration",
+//     description: "Integrasi API sistem inventaris ke aplikasi Android & iOS.",
+//     status: "On Hold",
+//     progress: 30,
+//     dueDate: "15 Jan 2026",
+//     team: ["MD", "LM"],
+//   },
+//   {
+//     id: "3",
+//     title: "SEO Optimization",
+//     description:
+//       "Audit dan optimasi konten untuk meningkatkan traffic organik.",
+//     status: "Completed",
+//     progress: 100,
+//     dueDate: "01 Feb 2026",
+//     team: ["BK"],
+//   },
+// ];
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+  // console.log(projects.data);
   return (
     <div className="space-y-6">
       {/* Header Section */}
@@ -67,22 +70,27 @@ export default function ProjectsPage() {
 
       {/* Projects Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {projects.data.map((project) => (
+          <ProjectCard key={project._id} project={project} />
         ))}
       </div>
     </div>
   );
 }
 
-// import { Badge, MoreVertical } from "lucide-react";
-// import { Progress } from "radix-ui";
-
 function ProjectCard({ project }: { project: Project }) {
   const statusColors = {
     Active: "bg-blue-100 text-blue-700 hover:bg-blue-100",
     Completed: "bg-green-100 text-green-700 hover:bg-green-100",
     "On Hold": "bg-amber-100 text-amber-700 hover:bg-amber-100",
+  };
+
+  const formatDate = (isoString: string) => {
+    return new Date(isoString).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
   };
 
   return (
@@ -118,17 +126,17 @@ function ProjectCard({ project }: { project: Project }) {
 
       <div className="flex items-center justify-between pt-4 border-t border-slate-50">
         <div className="flex -space-x-2">
-          {project.team.map((initial, i) => (
+          {project.team.map((member, i) => (
             <div
               key={i}
               className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-600"
             >
-              {initial}
+              {member.name.slice(0, 1)}
             </div>
           ))}
         </div>
         <div className="text-[11px] text-slate-400 font-medium italic">
-          Deadline: {project.dueDate}
+          Deadline: {formatDate(project.dueDate)}
         </div>
       </div>
     </div>
