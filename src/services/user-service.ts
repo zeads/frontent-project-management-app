@@ -3,7 +3,8 @@ import { User } from "@/types/user";
 
 export async function getUsers(): Promise<ApiResponse<User>> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-    next: { revalidate: 3600 }, // Opsional: update data setiap jam
+    // next: { revalidate: 3600 }, // Opsional: update data setiap jam
+    cache: "no-store",
   });
 
   if (!res.ok) {
