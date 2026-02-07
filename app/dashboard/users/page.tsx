@@ -1,19 +1,19 @@
-// import { ApiResponse } from "@/types/apiResponse";
-// import { User } from "@/types/user";
+import { ApiResponse } from "@/types/apiResponse";
+import { User } from "@/types/user";
 
-// async function getUsers(): Promise<ApiResponse<User>> {
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-//     next: { revalidate: 3600 }, // Opsional: update data setiap jam
-//   });
+async function getUsers(): Promise<ApiResponse<User>> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+    next: { revalidate: 3600 }, // Opsional: update data setiap jam
+  });
 
-//   if (!res.ok) {
-//     throw new Error("Gagal mengambil data user");
-//   }
+  if (!res.ok) {
+    throw new Error("Gagal mengambil data user");
+  }
 
-//   return res.json();
-// }
+  return res.json();
+}
 
-import { getUsers } from "@/src/services/user-service";
+// import { getUsers } from "@/src/services/user-service";
 
 export default async function UsersPage() {
   const users = await getUsers();
