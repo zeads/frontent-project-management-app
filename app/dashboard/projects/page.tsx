@@ -1,4 +1,5 @@
-import { Plus, Search, MoreVertical } from "lucide-react";
+// import { Plus, Search, MoreVertical } from "lucide-react";
+import { Search, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -6,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Project } from "@/types/project";
 import { getProjects } from "@/src/services/project-service";
+import { AddProjectDialog } from "@/components/projects/add-project-dialog";
 
 // Mock Data (Nantinya diganti dengan fetch dari API/DB)
 // const projects: Project[] = [
@@ -52,9 +54,10 @@ export default async function ProjectsPage() {
             Manage your projects from one central location
           </p>
         </div>
-        <Button className="w-full md:w-auto">
+        {/* <Button className="w-full md:w-auto">
           <Plus className="mr-2 h-4 w-4" /> New Project
-        </Button>
+        </Button> */}
+        <AddProjectDialog />
       </div>
 
       {/* Filter & Search Bar */}
