@@ -61,7 +61,7 @@ export function ProjectCard({ project }: { project: Project }) {
               onClick={() => setShowDelete(true)}
               className="text-red-600 focus:text-red-600"
             >
-              <Trash2 className="mr-2 h-4 w-4" /> Hapus
+              <Trash2 className="mr-2 h-4 w-4" /> Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -77,19 +77,19 @@ export function ProjectCard({ project }: { project: Project }) {
       <AlertDialog open={showDelete} onOpenChange={setShowDelete}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              Tindakan ini tidak dapat dibatalkan. Proyek{" "}
-              <strong>{project.title}</strong> akan dihapus permanen.
+              This action cannot be undone. This will permanently delete{" "}
+              <strong>{project.title}</strong> from your account.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               className="bg-red-600 hover:bg-red-700"
             >
-              {isDeleting ? "Menghapus..." : "Ya, Hapus"}
+              {isDeleting ? "Deleting..." : "Yes, delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

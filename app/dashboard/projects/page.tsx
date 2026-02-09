@@ -10,38 +10,6 @@ import { getProjects } from "@/src/services/project-service";
 import { AddProjectDialog } from "@/components/projects/add-project-dialog";
 import { ProjectCard } from "@/components/projects/project-card";
 
-// Mock Data (Nantinya diganti dengan fetch dari API/DB)
-// const projects: Project[] = [
-//   {
-//     id: "1",
-//     title: "E-Commerce Re-design",
-//     description: "Modernisasi tampilan UI/UX untuk platform toko online.",
-//     status: "Active",
-//     progress: 75,
-//     dueDate: "24 Des 2025",
-//     team: ["JS", "AS", "RK"],
-//   },
-//   {
-//     id: "2",
-//     title: "Mobile App Integration",
-//     description: "Integrasi API sistem inventaris ke aplikasi Android & iOS.",
-//     status: "On Hold",
-//     progress: 30,
-//     dueDate: "15 Jan 2026",
-//     team: ["MD", "LM"],
-//   },
-//   {
-//     id: "3",
-//     title: "SEO Optimization",
-//     description:
-//       "Audit dan optimasi konten untuk meningkatkan traffic organik.",
-//     status: "Completed",
-//     progress: 100,
-//     dueDate: "01 Feb 2026",
-//     team: ["BK"],
-//   },
-// ];
-
 export default async function ProjectsPage() {
   const projects = await getProjects();
   // console.log(projects.data);

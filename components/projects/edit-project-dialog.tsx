@@ -1,6 +1,5 @@
 "use client";
 
-// import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { projectSchema, ProjectInput } from "@/lib/project-schema";
@@ -57,7 +56,7 @@ export function EditProjectDialog({ project, open, onOpenChange }: EditProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Proyek</DialogTitle>
+          <DialogTitle>Edit Project</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -66,7 +65,7 @@ export function EditProjectDialog({ project, open, onOpenChange }: EditProps) {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nama Proyek</FormLabel>
+                  <FormLabel>Project Title</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -79,7 +78,7 @@ export function EditProjectDialog({ project, open, onOpenChange }: EditProps) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Deskripsi</FormLabel>
+                  <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
@@ -92,7 +91,7 @@ export function EditProjectDialog({ project, open, onOpenChange }: EditProps) {
               className="w-full"
               disabled={form.formState.isSubmitting}
             >
-              Simpan Perubahan
+              Save Changes
             </Button>
           </form>
         </Form>
