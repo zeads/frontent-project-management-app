@@ -1,54 +1,99 @@
-// import { Plus, Search, MoreVertical } from "lucide-react";
-import { Search, MoreVertical } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
-import { Project } from "@/types/project";
 import { getProjects } from "@/src/services/project-service";
-import { AddProjectDialog } from "@/components/projects/add-project-dialog";
+import { ProjectFilters } from "@/components/projects/project-filters";
 import { ProjectCard } from "@/components/projects/project-card";
+import { AddProjectDialog } from "@/components/projects/add-project-dialog";
+import { Project } from "@/types/project";
 
-export default async function ProjectsPage() {
-  const projects = await getProjects();
-  // console.log(projects.data);
+interface PageProps {
+  searchParams: Promise<{
+    search?: string;
+    status?: string;
+  }>;
+}
+
+export default async function ProjectsPage({ searchParams }: PageProps) {
+  // Ambil params (Next.js 15+ mewajibkan await pada searchParams)
+  const filters = await searchParams;
+  const projects = await getProjects(filters.search, filters.status);
+  // console.log(projects);
   return (
     <div className="space-y-6">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">My Projects</h1>
-          <p className="text-slate-500 text-sm">
-            Manage your projects from one central location
-          </p>
-        </div>
-        {/* <Button className="w-full md:w-auto">
-          <Plus className="mr-2 h-4 w-4" /> New Project
-        </Button> */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">My Projects</h1>
         <AddProjectDialog />
       </div>
 
-      {/* Filter & Search Bar */}
-      <div className="flex items-center gap-2">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-          <Input placeholder="Cari proyek..." className="pl-9" />
-        </div>
-        <Button variant="outline" className="hidden sm:flex">
-          Filter
-        </Button>
-      </div>
+      {/* Filter Component */}
+      <ProjectFilters />
 
-      {/* Projects Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {projects.data.map((project) => (
-          <ProjectCard key={project._id} project={project} />
-        ))}
-      </div>
+      {projects.length === 0 ? (
+        <div className="text-center py-20 border-2 border-dashed rounded-xl">
+          <p className="text-slate-500">
+            No projects found. Create a new project.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {projects.data.map((project: Project) => (
+            <ProjectCard key={project._id} project={project} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+
+// // import { Plus, Search, MoreVertical } from "lucide-react";
+// import { Search, MoreVertical } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Badge } from "@/components/ui/badge";
+// import { Progress } from "@/components/ui/progress";
+// import { cn } from "@/lib/utils";
+// import { Project } from "@/types/project";
+// import { getProjects } from "@/src/services/project-service";
+// import { AddProjectDialog } from "@/components/projects/add-project-dialog";
+// import { ProjectCard } from "@/components/projects/project-card";
+
+// export default async function ProjectsPage() {
+//   const projects = await getProjects();
+//   // console.log(projects.data);
+//   return (
+//     <div className="space-y-6">
+//       {/* Header Section */}
+//       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+//         <div>
+//           <h1 className="text-2xl font-bold tracking-tight">My Projects</h1>
+//           <p className="text-slate-500 text-sm">
+//             Manage your projects from one central location
+//           </p>
+//         </div>
+//         {/* <Button className="w-full md:w-auto">
+//           <Plus className="mr-2 h-4 w-4" /> New Project
+//         </Button> */}
+//         <AddProjectDialog />
+//       </div>
+
+//       {/* Filter & Search Bar */}
+//       <div className="flex items-center gap-2">
+//         <div className="relative flex-1 max-w-sm">
+//           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+//           <Input placeholder="Cari proyek..." className="pl-9" />
+//         </div>
+//         <Button variant="outline" className="hidden sm:flex">
+//           Filter
+//         </Button>
+//       </div>
+
+//       {/* Projects Grid */}
+//       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+//         {projects.data.map((project) => (
+//           <ProjectCard key={project._id} project={project} />
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
 
 // function ProjectCard({ project }: { project: Project }) {
 //   const statusColors = {
