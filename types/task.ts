@@ -1,7 +1,7 @@
 export type TaskStatus = "todo" | "in-progress" | "done";
 
 export interface Task {
-  id: string;
+  _id: string;
   // content: string;
   title: string;
   status: TaskStatus;

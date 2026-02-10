@@ -89,6 +89,7 @@
 import { getTasksByProject } from "@/src/services/task-service";
 import { getProjectsById } from "@/src/services/project-service";
 import { KanbanClient } from "@/components/tasks/kanban-client"; // Import wrapper baru
+// import { ApiResponse } from "@/types/apiResponse";
 
 export default async function ProjectDetailPage({
   params,
@@ -102,6 +103,8 @@ export default async function ProjectDetailPage({
     getProjectsById(id),
     getTasksByProject(id),
   ]);
+
+  // console.log(tasks);
 
   return (
     <div className="space-y-6">

@@ -1,7 +1,11 @@
 import { apiRequest } from "@/lib/api-client";
+import { ApiResponse } from "@/types/apiResponse";
 import { Task, TaskStatus } from "@/types/task";
 
-export async function getTasksByProject(projectId: string): Promise<Task[]> {
+// export async function getTasksByProject(projectId: string): Promise<Task[]> {
+export async function getTasksByProject(
+  projectId: string,
+): Promise<ApiResponse<Task>> {
   // const res = await apiRequest(`/project/${projectId}/task`);
   const res = await apiRequest(`/task/${projectId}/project`);
   // console.log(res);

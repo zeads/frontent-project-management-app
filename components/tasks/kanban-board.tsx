@@ -183,6 +183,7 @@ interface KanbanProps {
 export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
+  console.log(tasks);
   // Penting: Sync state saat data dari server berubah
   useEffect(() => {
     setTasks(initialTasks);
@@ -206,11 +207,11 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
     const newStatus = destination.droppableId as TaskStatus;
 
     // 1. Ambil item yang sedang di-drag
-    const draggedTask = tasks.find((t) => t.id === draggableId);
+    const draggedTask = tasks.find((t) => t._id === draggableId);
     if (!draggedTask) return;
 
     // 2. Buat array baru tanpa item tersebut
-    const remainingTasks = tasks.filter((t) => t.id !== draggableId);
+    const remainingTasks = tasks.filter((t) => t._id !== draggableId);
 
     // 3. Masukkan item ke posisi baru dengan status baru
     const updatedTask = { ...draggedTask, status: newStatus };
@@ -274,7 +275,7 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
                   {tasks
                     .filter((t) => t.status === col.id)
                     .map((task, index) => (
-                      <TaskCard key={task.id} task={task} index={index} />
+                      <TaskCard key={task._id} task={task} index={index} />
                     ))}
                   {provided.placeholder}
                 </div>
@@ -296,7 +297,7 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
 // Komponen TaskCard dipisah agar kode lebih rapi
 function TaskCard({ task, index }: { task: Task; index: number }) {
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={task._id} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
