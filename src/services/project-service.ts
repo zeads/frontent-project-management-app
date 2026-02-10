@@ -1,4 +1,5 @@
 import { apiRequest } from "@/lib/api-client";
+import { Project } from "@/types/project";
 // import { ApiResponse } from "@/types/apiResponse";
 // import { Project } from "@/types/project";
 // import { cookies } from "next/headers";
@@ -37,8 +38,21 @@ export async function getProjects(title?: string, status?: string) {
   if (status && status !== "all") params.append("status", status);
 
   const res = await apiRequest(`/project?${params.toString()}`);
-  console.log(res);
+  // console.log(res);
   if (!res.ok) throw new Error("Gagal mengambil data");
 
+  return res.json();
+}
+
+// export async function getProjectsById(projectId: string): Promise<Project[]> {
+//   const res = await apiRequest(`/project/${projectId}`);
+//   if (!res.ok) throw new Error("Gagal mengambil data project");
+//   return res.json();
+// }
+
+export async function getProjectsById(projectId: string) {
+  const res = await apiRequest(`/project/${projectId}`);
+  if (!res.ok) throw new Error("Gagal mengambil data project");
+  // Mengembalikan object utuh yang berisi field 'data'
   return res.json();
 }

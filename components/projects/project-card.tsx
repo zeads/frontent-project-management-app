@@ -24,6 +24,7 @@ import {
 
 import { EditProjectDialog } from "./edit-project-dialog";
 import { Project } from "@/types/project";
+import Link from "next/link";
 
 export function ProjectCard({ project }: { project: Project }) {
   const [showEdit, setShowEdit] = useState(false);
@@ -46,6 +47,7 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="flex justify-between items-start">
         {/* Konten Card (Title, Progress, dll sama seperti sebelumnya) */}
         <h3 className="font-bold">{project.title}</h3>
+        <Link href={`/dashboard/projects/${project._id}`}>Lihat Tugas</Link>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
