@@ -10,7 +10,7 @@ const KanbanBoardInternal = dynamic(
     ssr: false,
     loading: () => (
       <p className="p-10 text-center text-slate-500 italic">
-        Menyiapkan Board...
+        Loading Kanban Board...
       </p>
     ),
   },

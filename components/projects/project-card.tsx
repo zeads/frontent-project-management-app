@@ -47,7 +47,7 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="flex justify-between items-start">
         {/* Konten Card (Title, Progress, dll sama seperti sebelumnya) */}
         <h3 className="font-bold">{project.title}</h3>
-        <Link href={`/dashboard/projects/${project._id}`}>Lihat Tugas</Link>
+        <Link href={`/dashboard/projects/${project._id}`}>View Task</Link>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
