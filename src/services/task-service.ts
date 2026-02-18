@@ -13,10 +13,29 @@ export async function getTasksByProject(
   return res.json();
 }
 
+// export async function updateTaskStatusApi(taskId: string, status: TaskStatus) {
+//   const res = await apiRequest(`/task/${taskId}`, {
+//     method: "PUT",
+//     body: JSON.stringify({ status }),
+//   });
+//   console.log(taskId, status);
+//   console.log(res);
+//   // return res.ok;
+// }
+
 export async function updateTaskStatusApi(taskId: string, status: TaskStatus) {
   const res = await apiRequest(`/task/${taskId}`, {
-    method: "PATCH",
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ status }),
   });
-  return res.ok;
+  // console.log(res);
+  if (!res.ok) {
+    const error = await res.json();
+    return { error: error.message || "Gagal update task" };
+  }
+
+  return res.json();
 }

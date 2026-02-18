@@ -174,6 +174,8 @@ import { cn } from "@/lib/utils";
 import { MoreHorizontal, Plus } from "lucide-react";
 import { updateTaskStatusAction } from "@/app/actions/tasks";
 import { toast } from "sonner";
+import { updateTaskStatusApi } from "@/src/services/task-service";
+import { log } from "console";
 
 interface KanbanProps {
   initialTasks: Task[];
@@ -183,7 +185,8 @@ interface KanbanProps {
 export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
-  console.log(tasks);
+  // console.log("Tasks:");
+  // console.log(tasks);
   // Penting: Sync state saat data dari server berubah
   useEffect(() => {
     setTasks(initialTasks);
@@ -191,7 +194,12 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
 
   const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId } = result;
-
+    // console.log("destination:");
+    // console.log(destination);
+    // console.log("source:");
+    // console.log(source);
+    // console.log("draggableId(idTask):");
+    // console.log(draggableId);
     if (!destination) return;
 
     // Jika posisi tidak berubah, abaikan
@@ -203,38 +211,62 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
 
     const previousTasks = [...tasks];
 
+    // console.log("previousTasks:");
+    // console.log(previousTasks);
+
     // LOGIKA REORDERING & MOVING
     const newStatus = destination.droppableId as TaskStatus;
 
+    // console.log("newStatus:");
+    // console.log(newStatus);
+
     // 1. Ambil item yang sedang di-drag
     const draggedTask = tasks.find((t) => t._id === draggableId);
+    // console.log("draggedTask:");
+    // console.log(draggedTask);
     if (!draggedTask) return;
 
     // 2. Buat array baru tanpa item tersebut
     const remainingTasks = tasks.filter((t) => t._id !== draggableId);
+    // console.log("remainingTasks:");
+    // console.log(remainingTasks);
 
     // 3. Masukkan item ke posisi baru dengan status baru
     const updatedTask = { ...draggedTask, status: newStatus };
+    // console.log("updatedTask:");
+    // console.log(updatedTask);
 
     // Cari index yang tepat di dalam array global berdasarkan kolom tujuan
     // (Ini adalah cara sederhana, untuk performa lebih baik gunakan library array-move)
     const tasksInTargetCol = remainingTasks.filter(
       (t) => t.status === newStatus,
     );
+    // console.log("tasksInTargetCol:");
+    // console.log(tasksInTargetCol);
+
     const tasksNotInTargetCol = remainingTasks.filter(
       (t) => t.status !== newStatus,
     );
+    // console.log("tasksNotInTargetCol:");
+    // console.log(tasksNotInTargetCol);
 
     tasksInTargetCol.splice(destination.index, 0, updatedTask);
+    // console.log("tasksInTargetCol:");
+    // console.log(tasksInTargetCol);
 
     const finalTasks = [...tasksNotInTargetCol, ...tasksInTargetCol];
+    // console.log("finalTasks:");
+    // console.log(finalTasks);
 
     // Update UI secara Optimistic
     setTasks(finalTasks);
 
     // 4. Kirim ke API
-    const res = await updateTaskStatusAction(draggableId, newStatus, projectId);
-
+    // const res = await updateTaskStatusAction(draggableId, newStatus, projectId);
+    // console.log(draggableId);
+    // console.log(newStatus);
+    const res = await updateTaskStatusApi(draggableId, newStatus);
+    // console.log(res);
     if (res?.error) {
       toast.error(res.error);
       setTasks(previousTasks); // Rollback jika gagal
@@ -284,7 +316,7 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
 
             <div className="p-3">
               <button className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600 hover:bg-blue-50 w-full p-2 rounded-lg transition-all">
-                <Plus size={16} /> Tambah Task
+                <Plus size={16} /> Add Task
               </button>
             </div>
           </div>

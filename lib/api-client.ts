@@ -22,3 +22,19 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
 
   return response;
 }
+
+// export async function apiRequest(endpoint: string, options: RequestInit = {}) {
+//   const response = await fetch(
+//     `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`,
+//     {
+//       ...options,
+//       credentials: "include", // ⬅ penting
+//       headers: {
+//         "Content-Type": "application/json",
+//         ...options.headers,
+//       },
+//     },
+//   );
+
+//   return response;
+// }
