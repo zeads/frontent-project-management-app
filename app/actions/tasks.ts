@@ -3,6 +3,7 @@
 import { updateTaskStatusApi } from "@/src/services/task-service";
 import { revalidatePath } from "next/cache";
 import { TaskStatus } from "@/types/task";
+import { createTaskApi } from "@/src/services/task-service";
 
 export async function updateTaskStatusAction(
   taskId: string,
@@ -21,6 +22,33 @@ export async function updateTaskStatusAction(
     revalidatePath(`/dashboard/projects/${projectId}`);
     return { success: true };
   } catch (error) {
-    return { error: "Gagal menyambung ke server" };
+    return { error: "Gagal menyambung ke server" + error };
+  }
+}
+
+export async function createTaskAction(
+  title: string,
+  // status: string,
+  project: string,
+  description: string,
+  assignedTo: string,
+  deadline: string,
+) {
+  try {
+    await createTaskApi({
+      title,
+      // status,
+      project,
+      description,
+      assignedTo,
+      deadline,
+      createdBy: "697ea339a8b0dd85c29d6ca8",
+    });
+
+    // Refresh halaman agar data terbaru muncul di server component
+    revalidatePath(`/dashboard/projects/${project}`);
+    return { success: true };
+  } catch (error) {
+    return { error: "Gagal menyambung ke server" + error };
   }
 }

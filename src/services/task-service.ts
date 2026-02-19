@@ -29,3 +29,31 @@ export async function updateTaskStatusApi(taskId: string, status: TaskStatus) {
 
   return res.json();
 }
+
+export async function createTaskApi(data: {
+  title: string;
+  // status: string;
+  project: string;
+  description: string;
+  assignedTo: string;
+  deadline: string;
+  createdBy: string;
+}) {
+  console.log(data);
+  const res = await apiRequest(`/task`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+
+  console.log(res);
+  const result = await res.json(); // Ambil body response dulu
+
+  if (!res.ok) {
+    // Log pesan error dari Express agar ketahuan salahnya di mana
+    console.error("Backend Error Detail:", result);
+    throw new Error(result.message || "Gagal membuat task");
+  }
+
+  // return res.json();
+  return result;
+}

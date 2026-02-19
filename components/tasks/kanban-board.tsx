@@ -174,7 +174,8 @@ import { cn } from "@/lib/utils";
 import { MoreHorizontal, Plus } from "lucide-react";
 import { updateTaskStatusAction } from "@/app/actions/tasks";
 import { toast } from "sonner";
-import { updateTaskStatusApi } from "@/src/services/task-service";
+// import { updateTaskStatusApi } from "@/src/services/task-service";
+import { AddTaskModal } from "./add-task-modal";
 
 interface KanbanProps {
   initialTasks: Task[];
@@ -184,12 +185,21 @@ interface KanbanProps {
 export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
+  // state untuk modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeStatus, setActiveStatus] = useState<string>("");
+
   // console.log("Tasks:");
   // console.log(tasks);
   // Penting: Sync state saat data dari server berubah
   useEffect(() => {
     setTasks(initialTasks);
   }, [initialTasks]);
+
+  const openAddTask = (status: string) => {
+    setActiveStatus(status);
+    setIsModalOpen(true);
+  };
 
   const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId } = result;
@@ -324,13 +334,22 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
             </Droppable>
 
             <div className="p-3">
-              <button className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600 hover:bg-blue-50 w-full p-2 rounded-lg transition-all">
+              <button
+                onClick={() => openAddTask(col.id)}
+                className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600 hover:bg-blue-50 w-full p-2 rounded-lg transition-all"
+              >
                 <Plus size={16} /> Add Task
               </button>
             </div>
           </div>
         ))}
       </div>
+      <AddTaskModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        // status={activeStatus}
+        project={projectId}
+      />
     </DragDropContext>
   );
 }
