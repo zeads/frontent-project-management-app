@@ -175,7 +175,6 @@ import { MoreHorizontal, Plus } from "lucide-react";
 import { updateTaskStatusAction } from "@/app/actions/tasks";
 import { toast } from "sonner";
 import { updateTaskStatusApi } from "@/src/services/task-service";
-import { log } from "console";
 
 interface KanbanProps {
   initialTasks: Task[];
@@ -265,11 +264,21 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
     // const res = await updateTaskStatusAction(draggableId, newStatus, projectId);
     // console.log(draggableId);
     // console.log(newStatus);
-    const res = await updateTaskStatusApi(draggableId, newStatus);
-    // console.log(res);
+
+    // const res = await updateTaskStatusApi(draggableId, newStatus);
+    // // console.log(res);
+    // if (res?.error) {
+    //   toast.error(res.error);
+    //   setTasks(previousTasks); // Rollback jika gagal
+    // }
+    // 3. Panggil Server Action (Aman & mendukung Revalidation)
+    const res = await updateTaskStatusAction(draggableId, newStatus, projectId);
+
     if (res?.error) {
       toast.error(res.error);
       setTasks(previousTasks); // Rollback jika gagal
+    } else {
+      toast.success("Status tugas diperbarui");
     }
   };
 

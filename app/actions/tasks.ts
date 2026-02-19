@@ -9,13 +9,18 @@ export async function updateTaskStatusAction(
   status: TaskStatus,
   projectId: string,
 ) {
-  const success = await updateTaskStatusApi(taskId, status);
+  try {
+    const res = await updateTaskStatusApi(taskId, status);
 
-  if (success) {
-    // Refresh data agar sinkron dengan server
+    // Periksa apakah service mengembalikan error
+    if (res && res.error) {
+      return { error: res.error };
+    }
+
+    // Paksa Next.js mengambil data terbaru untuk project ini
     revalidatePath(`/dashboard/projects/${projectId}`);
     return { success: true };
+  } catch (error) {
+    return { error: "Gagal menyambung ke server" };
   }
-
-  return { error: "Gagal memperbarui status" };
 }

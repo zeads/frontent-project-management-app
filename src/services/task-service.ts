@@ -13,16 +13,6 @@ export async function getTasksByProject(
   return res.json();
 }
 
-// export async function updateTaskStatusApi(taskId: string, status: TaskStatus) {
-//   const res = await apiRequest(`/task/${taskId}`, {
-//     method: "PUT",
-//     body: JSON.stringify({ status }),
-//   });
-//   console.log(taskId, status);
-//   console.log(res);
-//   // return res.ok;
-// }
-
 export async function updateTaskStatusApi(taskId: string, status: TaskStatus) {
   const res = await apiRequest(`/task/${taskId}`, {
     method: "PUT",
