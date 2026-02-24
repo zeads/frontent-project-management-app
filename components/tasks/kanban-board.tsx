@@ -176,6 +176,7 @@ import { updateTaskStatusAction } from "@/app/actions/tasks";
 import { toast } from "sonner";
 // import { updateTaskStatusApi } from "@/src/services/task-service";
 import { AddTaskModal } from "./add-task-modal";
+import { EditTaskModal } from "./edit-task-modal";
 
 interface KanbanProps {
   initialTasks: Task[];
@@ -188,6 +189,14 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
   // state untuk modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeStatus, setActiveStatus] = useState<string>("");
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+
+  const openEditTask = (task: Task) => {
+    setSelectedTask(task);
+    setIsEditModalOpen(true);
+  };
 
   // console.log("Tasks:");
   // console.log(tasks);
@@ -326,7 +335,13 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
                   {tasks
                     .filter((t) => t.status === col.id)
                     .map((task, index) => (
-                      <TaskCard key={task._id} task={task} index={index} />
+                      // <TaskCard key={task._id} task={task} index={index} />
+                      <TaskCard
+                        key={task._id}
+                        task={task}
+                        index={index}
+                        onClick={() => openEditTask(task)} // Tambahkan ini
+                      />
                     ))}
                   {provided.placeholder}
                 </div>
@@ -350,12 +365,28 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
         // status={activeStatus}
         project={projectId}
       />
+      <EditTaskModal
+        key={selectedTask?._id} // Tambahkan ini
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        task={selectedTask}
+        projectId={projectId}
+      />
     </DragDropContext>
   );
 }
 
 // Komponen TaskCard dipisah agar kode lebih rapi
-function TaskCard({ task, index }: { task: Task; index: number }) {
+// function TaskCard({ task, index }: { task: Task; index: number }) {
+function TaskCard({
+  task,
+  index,
+  onClick,
+}: {
+  task: Task;
+  index: number;
+  onClick: () => void;
+}) {
   return (
     <Draggable draggableId={task._id} index={index}>
       {(provided, snapshot) => (
@@ -363,6 +394,7 @@ function TaskCard({ task, index }: { task: Task; index: number }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          onClick={onClick} // Tambahkan trigger klik
           className={cn(
             "bg-white p-4 rounded-lg border shadow-sm mb-3 transition-all duration-200",
             snapshot.isDragging

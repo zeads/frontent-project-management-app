@@ -4,6 +4,7 @@ import { updateTaskStatusApi } from "@/src/services/task-service";
 import { revalidatePath } from "next/cache";
 import { TaskStatus } from "@/types/task";
 import { createTaskApi } from "@/src/services/task-service";
+import { updateTaskApi } from "@/src/services/task-service";
 
 export async function updateTaskStatusAction(
   taskId: string,
@@ -50,5 +51,19 @@ export async function createTaskAction(
     return { success: true };
   } catch (error) {
     return { error: "Gagal menyambung ke server" + error };
+  }
+}
+
+export async function updateTaskAction(
+  taskId: string,
+  data: any,
+  projectId: string,
+) {
+  try {
+    await updateTaskApi(taskId, data);
+    revalidatePath(`/dashboard/projects/${projectId}`);
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message };
   }
 }

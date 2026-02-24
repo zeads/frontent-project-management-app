@@ -57,3 +57,16 @@ export async function createTaskApi(data: {
   // return res.json();
   return result;
 }
+
+export async function updateTaskApi(taskId: string, data: Partial<Task>) {
+  const res = await apiRequest(`/task/${taskId}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(result.message || "Gagal memperbarui tugas");
+  }
+  return result;
+}
