@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { TaskStatus } from "@/types/task";
 import { createTaskApi } from "@/src/services/task-service";
 import { updateTaskApi } from "@/src/services/task-service";
+import { deleteTaskApi } from "@/src/services/task-service";
 
 export async function updateTaskStatusAction(
   taskId: string,
@@ -61,6 +62,16 @@ export async function updateTaskAction(
 ) {
   try {
     await updateTaskApi(taskId, data);
+    revalidatePath(`/dashboard/projects/${projectId}`);
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message };
+  }
+}
+
+export async function deleteTaskAction(taskId: string, projectId: string) {
+  try {
+    await deleteTaskApi(taskId);
     revalidatePath(`/dashboard/projects/${projectId}`);
     return { success: true };
   } catch (error: any) {

@@ -70,3 +70,16 @@ export async function updateTaskApi(taskId: string, data: Partial<Task>) {
   }
   return result;
 }
+
+export async function deleteTaskApi(taskId: string) {
+  const res = await apiRequest(`/task/${taskId}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || "Gagal menghapus tugas");
+  }
+
+  return res.json();
+}

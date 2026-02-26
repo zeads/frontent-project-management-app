@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { updateTaskAction } from "@/app/actions/tasks";
 import { Task } from "@/types/task";
 import { toast } from "sonner";

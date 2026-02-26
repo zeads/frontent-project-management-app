@@ -171,12 +171,13 @@ import {
 } from "@hello-pangea/dnd";
 import { COLUMNS, Task, TaskStatus } from "@/types/task";
 import { cn } from "@/lib/utils";
-import { MoreHorizontal, Plus } from "lucide-react";
 import { updateTaskStatusAction } from "@/app/actions/tasks";
 import { toast } from "sonner";
-// import { updateTaskStatusApi } from "@/src/services/task-service";
 import { AddTaskModal } from "./add-task-modal";
 import { EditTaskModal } from "./edit-task-modal";
+
+import { MoreHorizontal, Plus, Trash, Loader2 } from "lucide-react"; // Tambahkan Trash2
+import { deleteTaskAction } from "@/app/actions/tasks"; // Import action
 
 interface KanbanProps {
   initialTasks: Task[];
@@ -341,6 +342,7 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanProps) {
                         task={task}
                         index={index}
                         onClick={() => openEditTask(task)} // Tambahkan ini
+                        projectId={projectId} // Tambahkan ini
                       />
                     ))}
                   {provided.placeholder}
@@ -382,11 +384,31 @@ function TaskCard({
   task,
   index,
   onClick,
+  projectId,
 }: {
   task: Task;
   index: number;
   onClick: () => void;
+  projectId: string;
 }) {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Mencegah modal edit terbuka
+
+    if (!confirm("Apakah Anda yakin ingin menghapus tugas ini?")) return;
+
+    setIsDeleting(true);
+    const res = await deleteTaskAction(task._id, projectId);
+    setIsDeleting(false);
+
+    if (res.error) {
+      toast.error(res.error);
+    } else {
+      toast.success("Tugas berhasil dihapus");
+    }
+  };
+
   return (
     <Draggable draggableId={task._id} index={index}>
       {(provided, snapshot) => (
@@ -402,9 +424,24 @@ function TaskCard({
               : "border-slate-200 hover:border-slate-300",
           )}
         >
-          <p className="text-sm font-medium text-slate-700 leading-relaxed">
-            {task.title}
-          </p>
+          <div className="flex justify-between items-start gap-2">
+            <p className="text-sm font-medium text-slate-700 leading-relaxed">
+              {task.title}
+            </p>
+
+            {/* Tombol Hapus - Muncul saat hover (group-hover) */}
+            <button
+              onClick={handleDelete}
+              disabled={isDeleting}
+              // className="text-slate-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 p-1"
+            >
+              {isDeleting ? (
+                <Loader2 size={14} className="animate-spin" />
+              ) : (
+                <Trash size={14} />
+              )}
+            </button>
+          </div>
         </div>
       )}
     </Draggable>
