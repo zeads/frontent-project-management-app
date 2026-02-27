@@ -3,7 +3,7 @@
 import {
   // Home,
   BriefcaseBusiness,
-  NotebookPen,
+  // NotebookPen,
   Settings,
   Users,
   LayoutDashboard,
@@ -29,7 +29,7 @@ import { LogoutButton } from "./LogoutButton";
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Projects", url: "/dashboard/projects", icon: BriefcaseBusiness },
-  { title: "Tasks", url: "/dashboard/tasks", icon: NotebookPen },
+  // { title: "Tasks", url: "/dashboard/tasks", icon: NotebookPen },
   { title: "Users", url: "/dashboard/users", icon: Users },
   { title: "Settings", url: "/dashboard/settings", icon: Settings },
 ];
