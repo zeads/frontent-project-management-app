@@ -30,14 +30,14 @@ export default function Pricing() {
 
   return (
     <div id="pricing" className="h-screen flex flex-col gap-5 pt-30">
-      <div className="flex flex-col gap-5 items-center justify-center">
+      {/* <div className="flex flex-col gap-5 items-center justify-center">
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
           Pricing
         </h1>
         <p className="mt-2 text-lg text-slate-700">
           Choose the plan that&apos;s right for you.
         </p>
-      </div>
+      </div> */}
       <div className="flex gap-5 items-center justify-center">
         <PriceCard
           forTitle="For Individuals"
